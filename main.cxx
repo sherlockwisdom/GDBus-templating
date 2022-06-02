@@ -1,6 +1,6 @@
 
 /*
- * https://linoxide.com/d-bus-ipc-mechanism-linux/
+ * https://docs.gtk.org/gio/index.html
  *
  * */
 
