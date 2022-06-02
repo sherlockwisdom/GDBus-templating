@@ -97,8 +97,30 @@ void compose_message(GDBusConnection *connection, GError* error,
 	::g_object_unref(g_dbus_message);
 }
 
+int main(int argc, gchar** argv) {
 
-int main() {
+	gchar* path;
+	gchar* method;
+
+	for(int i=1; i<argc;++i) {
+		if(std::string(argv[i]) == "--method") {
+			method = argv[i+1];
+			++i;
+		}
+		else if(std::string(argv[i]) == "--path") {
+			path = argv[i+1];
+			++i;
+		}
+	}
+
+	if(path == NULL || method == NULL) {
+		if(path == NULL) 
+			std::cout<< "Path cannot be NULL" << std::endl;
+		if(method == NULL) 
+			std::cout<< "Method cannot be NULL" << std::endl;
+		return 1;
+	}
+
 	GDBusConnection *connection;
 	GError *error = NULL;
 
@@ -122,10 +144,9 @@ int main() {
 
 	const gchar* connection_bus_name = "org.freedesktop.ModemManager1";
 	const gchar* interface_ = "org.freedesktop.ModemManager1.Modem";
-	const gchar* path = "/org/freedesktop/ModemManager1/Modem/2";
-	const gchar* method = "Enable";
 
-	std::cout << "- Connection Bus Name: " << connection_bus_name << std::endl;
+	std::cout << "- Connection Bus Name: " << 
+		connection_bus_name << std::endl;
 	std::cout << "- Interface: " << interface_ << std::endl;
 	std::cout << "- Path: " << path << std::endl;
 	std::cout << "- Method: " << method << std::endl;
