@@ -1,5 +1,9 @@
 #!/usr/bin/env python3
 
+"""
+- https://www.freedesktop.org/software/ModemManager/api/latest/ref-dbus.html
+"""
+
 import dbus
 from dbus.mainloop.glib import DBusGMainLoop
 from gi.repository import GLib
@@ -10,8 +14,23 @@ interface_removed_str = "InterfacesRemoved"
 
 def modem_property_changed(*args, **kwargs):
     print("Modem property changed...")
-    print(args, '\n')
+
+    """
     print(kwargs, '\n\n')
+    """
+    # print(args, '\n')
+
+    change_props = args[1]
+
+    if 'RegistrationState' in change_props:
+        """
+        - Changes to registration state can be referenced from here.
+        https://www.freedesktop.org/software/ModemManager/api/latest/ModemManager-Flags-and-Enumerations.html#MMModem3gppRegistrationState
+        """
+        print("changed registration state:", change_props['RegistrationState'])
+
+    if 'OperatorCode' in change_props:
+        print("changed operator code:", change_props['OperatorCode'])
 
 
 def modem_added(modem_path, *args):
