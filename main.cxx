@@ -14,30 +14,6 @@
 #include <gio/gio.h>
 
 
-/*
-void listener(GDBusError &error, GDBusConnection *connection) {
-	GMainLoop *loop;
-	loop = g_main_loop_new(NULL, FALSE);
-
-	g_dbus_bus_add_match(connection,
-			"type='signal', \
-			interface='org.freedesktop.ModemManager1'",
-			NULL);
-	
-	g_dbus_bus_add_match(connection,
-			"type='signal', \
-			interface='org.freedesktop.NetworkManager.AccessPoint'",
-			NULL);
-
-	g_dbus_connection_add_filter(connection,
-			g_dbus_filter, loop, NULL);
-	// deprecated
-	// g_dbus_connection_setup_with_g_main(connection, NULL);
-	// g_main_context_push_thread_default(NULL);
-	g_main_loop_run(loop);
-}
-*/
-
 void compose_message(GDBusConnection *connection, GError* error, 
 		const gchar* connection_bus_name,
 		const gchar* path,
@@ -175,7 +151,6 @@ int main(int argc, gchar** argv) {
 	gchar* path;
 	gchar* method;
 	const gchar* connection_bus_name = "org.freedesktop.ModemManager1";
-	// const gchar* interface_ = "org.freedesktop.ModemManager1.Modem";
 	const gchar* interface_ = "org.freedesktop.DBus.ObjectManager";
 
 	for(int i=1; i<argc;++i) {
@@ -226,8 +201,6 @@ int main(int argc, gchar** argv) {
 	std::cout << "- Method: " << method << std::endl;
 
 	// get_interfaces(connection, path, connection_bus_name, error);
-
-	
 	compose_message(connection, error, 
 			connection_bus_name, 
 			path, 
